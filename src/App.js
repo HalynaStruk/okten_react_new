@@ -10,7 +10,14 @@ const App = () => {
 
     const getUserId = async (userId) => {
         const {data} = await postService.getPostByUserId(userId);
-        setPosts(data)
+        setPosts(data);
+        // або можливий такий запис(console.log тут щоб побачити який швидше виведеться )
+        // postService.getPostByUserId(userId).then(({data}) => {
+        // setPosts(data)
+        // console.log(data); другий цей вивівся
+        // })
+        // console.log('getUserId'); перша це вивелось
+
     }
 
     const trigger = () => {
