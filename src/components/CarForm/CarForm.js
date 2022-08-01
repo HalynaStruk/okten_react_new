@@ -56,7 +56,6 @@ const CarForm = ({setNewCar, carForUpdate, setUpdatedCar, setCarForUpdate}) => {
             {/*{formError.year && <span>{formError.year[0]}</span>}*/}
             <button disabled={!isValid}>{carForUpdate ? 'update' : 'create'}</button>
             {
-
                 !!carForUpdate && <button onClick={clearForm}>clear form</button>
             }
         </form>
