@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
-import {joiResolver} from "@hookform/resolvers/joi"
+import {joiResolver} from "@hookform/resolvers/joi";
 
 import {carService} from "../../services";
 import {carValidator} from "../../validators";
 
-const CarForm = ({setNewCar}) => {
+
+const CarForm = ({setNewCar, carForUpdate}) => {
     const [formError, setFormError] = useState({})
-    const {register, reset, handleSubmit, formState:{errors}} = useForm({resolver:joiResolver(carValidator)});
+    const {register, reset, handleSubmit, formState:{errors}, setValue} = useForm({resolver:joiResolver(carValidator), mode:"onTouched"});
     //{resolver:joiResolver(carValidator)} підключили наш валідатор
     // formState:{errors} сюди будуть попадати помилки
+    // mode:"onTouched" якщо ми торкнемось до input зразу вибє помилка
     const mySubmit = async (car) => {
         try {
             const {data} = await carService.create(car);
@@ -20,6 +22,15 @@ const CarForm = ({setNewCar}) => {
         }
 
     }
+
+    useEffect(()=>{
+        if (carForUpdate) {
+            const {model, price, year} = carForUpdate;
+            setValue('model', model)
+            setValue('price', price)
+            setValue('year', year)
+        }
+    },[carForUpdate])
 
     return (
         <form onSubmit={handleSubmit(mySubmit)}>
