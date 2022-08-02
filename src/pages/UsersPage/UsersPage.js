@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {userService} from "../../services";
-import {User} from "../../components";
+import {Loading, User} from "../../components";
 import {Outlet} from "react-router-dom";
 
 const UsersPage = () => {
@@ -17,7 +17,7 @@ const UsersPage = () => {
             {
                 users
                 ? users.map((user) => <User key={user.id} user={user}/>)
-                    :'Loading..'
+                    : <Loading/>
             }
             </div>
             <div><Outlet/></div>
