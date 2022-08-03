@@ -1,13 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {postService} from "../../services";
 import {Post} from "../../components";
 import {Outlet, useParams, useSearchParams} from "react-router-dom";
-import {MyContext} from "../../index";
+
 
 const PostPage = () => {
     const [posts, setPosts] = useState([]);
-    const value = useContext(MyContext);
     const {userId} = useParams()
     const [query, setQuery] = useSearchParams({page:'1'})
 
@@ -26,13 +25,14 @@ const PostPage = () => {
         const queryObject = Object.fromEntries(query.entries());
         queryObject.page++;
         setQuery(queryObject)
+
     }
 
     return (
         <div style={{display:'flex'}}>
             <div>
                 {posts.map(post=><Post key={post.id} post={post} flag={!userId}/>)}
-                <button onClick={()=>nextPage()}>Next</button>
+                {!userId && <button onClick={() => nextPage()}>Next</button>}
             </div>
             <div><Outlet/></div>
         </div>
